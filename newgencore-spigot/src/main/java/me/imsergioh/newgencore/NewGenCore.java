@@ -1,6 +1,7 @@
 package me.imsergioh.newgencore;
 
-import org.bukkit.Bukkit;
+import me.imsergioh.newgencore.holder.ConfigHolder;
+import me.imsergioh.newgencore.util.FilesUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class NewGenCore extends JavaPlugin {
@@ -10,6 +11,8 @@ public class NewGenCore extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+        FilesUtil.createDirectories(getDataFolder());
+        ConfigHolder.registerConfigs();
     }
 
     public static NewGenCore getPlugin() {
