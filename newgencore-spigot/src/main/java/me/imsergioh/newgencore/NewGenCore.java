@@ -59,7 +59,8 @@ public class NewGenCore extends JavaPlugin {
                 "SELECT data FROM testdata WHERE uuid = ?",
                 "INSERT INTO testdata (uuid, data) VALUES (?, ?)",
                 "DELETE FROM testdata WHERE uuid = ?");
-        storage.save(new LocalData(new Document().append("uuid", uuid)), uuid);
+        LocalData data = storage.load("5583b04b-ff4e-42dc-b7c7-5e9d3db046d8");
+        System.out.println(data);
     }
 
     private static void registerCommands() {

@@ -33,7 +33,7 @@ public class MySQLStorage implements DataStorage {
     public void save(LocalData data, Object queryObject) {
         try {
             saveStatement.setObject(1, queryObject);
-            saveStatement.setString(2, data.toString());
+            saveStatement.setString(2, data.toJson());
 
             saveStatement.executeUpdate();
         } catch (SQLException e) {
