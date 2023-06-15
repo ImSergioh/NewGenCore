@@ -4,23 +4,21 @@ import com.mongodb.MongoClient;
 import me.imsergioh.newgencore.NewGenCore;
 import org.bson.Document;
 
+import javax.print.Doc;
+
 public class MongoDBStorage implements DataStorage {
 
     private final String database;
     private final String collection;
-    private final Document findQuery;
 
-    private Document document;
-
-    public MongoDBStorage(String database, String collection, Document findQuery) {
+    public MongoDBStorage(String database, String collection) {
         this.database = database;
         this.collection = collection;
-        this.findQuery = findQuery;
     }
 
     @Override
-    public void save(LocalData data) {
-        delete();
+    public void save(LocalData data, Object queryObject) {
+        delete(queryObject);
         NewGenCore.getMongoDBConnection().getMongoClient()
                 .getDatabase(database)
                 .getCollection(collection)
@@ -28,7 +26,8 @@ public class MongoDBStorage implements DataStorage {
     }
 
     @Override
-    public LocalData load() {
+    public LocalData load(Object queryObject) {
+        Document findQuery = (Document) queryObject;
         Document document = NewGenCore.getMongoDBConnection().getMongoClient()
                 .getDatabase(database)
                 .getCollection(collection)
@@ -38,7 +37,8 @@ public class MongoDBStorage implements DataStorage {
     }
 
     @Override
-    public void delete() {
+    public void delete(Object queryObject) {
+        Document findQuery = (Document) queryObject;
         NewGenCore.getMongoDBConnection().getMongoClient()
                 .getDatabase(database)
                 .getCollection(collection)

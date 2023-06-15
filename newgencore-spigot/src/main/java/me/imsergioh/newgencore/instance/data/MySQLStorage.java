@@ -15,13 +15,10 @@ public class MySQLStorage implements DataStorage {
     private PreparedStatement saveStatement;
     private PreparedStatement deleteStatement;
 
-    private Object fieldQuery;
 
     public MySQLStorage(String loadSQL,
                         String saveSQL,
-                        String deleteSQL,
-                        Object fieldQuery) {
-        this.fieldQuery = fieldQuery;
+                        String deleteSQL) {
         try {
             Connection connection = NewGenCore.getMySQLConnection().getConnection();
             loadStatement = connection.prepareStatement(loadSQL);
@@ -33,13 +30,11 @@ public class MySQLStorage implements DataStorage {
     }
 
     @Override
-    public void save(LocalData data) {
+    public void save(LocalData data, Object queryObject) {
         try {
-            // Crear un objeto JSON a partir de los datos del jugador
             JSONObject jsonData = new JSONObject();
 
-            // Guardar los datos del jugador en la tabla playerdata
-            saveStatement.setObject(1, fieldQuery);
+            saveStatement.setObject(1, queryObject);
             saveStatement.setString(2, jsonData.toString());
 
             saveStatement.executeUpdate();
@@ -49,9 +44,9 @@ public class MySQLStorage implements DataStorage {
     }
 
     @Override
-    public LocalData load() {
+    public LocalData load(Object queryObject) {
         try {
-            loadStatement.setObject(1, fieldQuery);
+            loadStatement.setObject(1, queryObject);
 
             ResultSet resultSet = loadStatement.executeQuery();
             if (resultSet.next()) {
@@ -66,9 +61,9 @@ public class MySQLStorage implements DataStorage {
     }
 
     @Override
-    public void delete() {
+    public void delete(Object queryObject) {
         try {
-            deleteStatement.setObject(1, fieldQuery);
+            deleteStatement.setObject(1, queryObject);
             deleteStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

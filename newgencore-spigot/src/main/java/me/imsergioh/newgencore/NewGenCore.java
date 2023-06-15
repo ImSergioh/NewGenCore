@@ -7,9 +7,16 @@ import me.imsergioh.newgencore.backend.RedisConnection;
 import me.imsergioh.newgencore.backend.MySQLConnection;
 import me.imsergioh.newgencore.command.helloWorldCmd;
 import me.imsergioh.newgencore.holder.ConfigHolder;
+import me.imsergioh.newgencore.instance.data.LocalData;
+import me.imsergioh.newgencore.instance.data.MySQLStorage;
 import me.imsergioh.newgencore.manager.PluginCommandManager;
+import me.imsergioh.newgencore.util.ExceptionsUtil;
 import me.imsergioh.newgencore.util.FilesUtil;
+import org.bson.Document;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.sql.SQLException;
+import java.util.UUID;
 
 public class NewGenCore extends JavaPlugin {
 
@@ -32,6 +39,23 @@ public class NewGenCore extends JavaPlugin {
         ConfigHolder.registerConfigs();
         PluginCommandManager.registerDefaults();
         registerCommands();
+
+        try {
+            sqlDataTest();
+        } catch (SQLException e) {
+            ExceptionsUtil.handleSimpleException(e);
+        }
+    }
+
+    private void sqlDataTest() throws SQLException {
+        String uuid = UUID.randomUUID().toString();
+        mySQLConnection.getConnection()
+                .prepareStatement("CREATE TABLE IF NOT EXISTS testdata (uuid, data)").executeQuery();
+        MySQLStorage storage = new MySQLStorage(
+                "SELECT data FROM testdata WHERE uuid = ?",
+                "INSERT INTO playerdata WHERE uuid = ?",
+                "DELETE FROM playerdata WHERE uuid = ?");
+        storage.save(new LocalData(new Document().append("uuid", uuid)), uuid);
     }
 
     private static void registerCommands() {

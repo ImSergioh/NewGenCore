@@ -16,26 +16,22 @@ import java.nio.file.Paths;
 
 public class JSONStorage implements DataStorage {
 
-    private final File file;
-
-    public JSONStorage(File file) {
-        this.file = file;
-    }
-
     @Override
-    public void save(LocalData data) {
+    public void save(LocalData data, Object queryObject) {
         BsonDocument bson = BsonDocument.parse(data.toJson());
 
         BasicOutputBuffer outputBuffer = new BasicOutputBuffer();
         BsonBinaryWriter writer = new BsonBinaryWriter(outputBuffer);
         new BsonDocumentCodec().encode(writer, bson, EncoderContext.builder().isEncodingCollectibleDocument(true).build());
         byte[] byteArr = outputBuffer.toByteArray();
-        writeToFile(byteArr);
+        writeToFile(((File) queryObject), byteArr);
+        writeToFile(((File) queryObject), byteArr);
     }
 
     @Override
-    public LocalData load() {
+    public LocalData load(Object queryObject) {
         String fileContent = null;
+        File file = (File) queryObject;
         try {
             fileContent = new String(Files.readAllBytes(Paths.get(file.getAbsolutePath())));
         } catch (IOException e) {
@@ -45,11 +41,11 @@ public class JSONStorage implements DataStorage {
     }
 
     @Override
-    public void delete() {
-        file.delete();
+    public void delete(Object queryObject) {
+        ((File) queryObject).delete();
     }
 
-    private void writeToFile(byte[] byteArray) {
+    private void writeToFile(File file, byte[] byteArray) {
         try (FileOutputStream fos = new FileOutputStream(file.getAbsolutePath())) {
             fos.write(byteArray);
         } catch (IOException e) {
