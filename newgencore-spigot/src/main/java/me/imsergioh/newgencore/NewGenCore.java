@@ -37,20 +37,6 @@ public class NewGenCore extends JavaPlugin {
         ConfigHolder.registerConfigs();
         PluginCommandManager.registerDefaults();
         registerCommands();
-
-        if (sqlConnection != null) {
-            try {
-                Statement statement = sqlConnection.getConnection().createStatement();
-                if (statement.executeUpdate("CREATE DATABASE IF NOT EXISTS NewGenCore") == 1) {
-                    System.out.println("DEBUG SETUP NEWGENCORE DATABASE HAS BEEN CREATED!");
-                } else {
-                    System.out.println("DEBUG NEWGENCORE DATABASE IS ALREADY CREATED!");
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-
-        }
     }
 
     private static void registerCommands() {
