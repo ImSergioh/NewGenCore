@@ -7,13 +7,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class SQLConnection {
+public class MySQLConnection {
 
     @Getter
     private Connection connection;
 
-    public SQLConnection(String hostname, int port,
-    String database, String username, String password) {
+    public MySQLConnection(String hostname, int port,
+                           String database, String username, String password) {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/" + database, username, password);
         } catch (SQLException e) {
