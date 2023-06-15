@@ -50,11 +50,15 @@ public class NewGenCore extends JavaPlugin {
     private void sqlDataTest() throws SQLException {
         String uuid = UUID.randomUUID().toString();
         mySQLConnection.getConnection()
-                .prepareStatement("CREATE TABLE IF NOT EXISTS testdata (uuid, data)").executeQuery();
+                .createStatement().executeUpdate(
+                        "CREATE TABLE IF NOT EXISTS testdata (uuid varchar(255), data varchar(255))"
+                );
+
+
         MySQLStorage storage = new MySQLStorage(
                 "SELECT data FROM testdata WHERE uuid = ?",
-                "INSERT INTO playerdata WHERE uuid = ?",
-                "DELETE FROM playerdata WHERE uuid = ?");
+                "INSERT INTO testdata (uuid, data) VALUES (?, ?)",
+                "DELETE FROM testdata WHERE uuid = ?");
         storage.save(new LocalData(new Document().append("uuid", uuid)), uuid);
     }
 

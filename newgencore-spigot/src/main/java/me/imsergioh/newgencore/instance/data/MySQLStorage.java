@@ -32,10 +32,8 @@ public class MySQLStorage implements DataStorage {
     @Override
     public void save(LocalData data, Object queryObject) {
         try {
-            JSONObject jsonData = new JSONObject();
-
             saveStatement.setObject(1, queryObject);
-            saveStatement.setString(2, jsonData.toString());
+            saveStatement.setString(2, data.toString());
 
             saveStatement.executeUpdate();
         } catch (SQLException e) {
