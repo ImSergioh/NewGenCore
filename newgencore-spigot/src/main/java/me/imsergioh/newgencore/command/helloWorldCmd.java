@@ -6,7 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandInfo(name = "helloworld", permission = "newgencore.admin")
-public class helloWorldCmd extends PluginCommand {
+public class helloWorldCMD extends PluginCommand {
 
     @Override
     public void executeConsole(CommandSender consoleSender, String label, String[] args) {
