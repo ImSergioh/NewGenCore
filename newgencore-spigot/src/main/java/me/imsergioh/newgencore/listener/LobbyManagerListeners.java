@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class LobbyManagerListeners implements Listener {
 
@@ -15,6 +16,18 @@ public class LobbyManagerListeners implements Listener {
 
     public LobbyManagerListeners(LobbyManager lobbyManager) {
         this.lobbyManager = lobbyManager;
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void removeJoinMessage(PlayerJoinEvent event) {
+        if (!lobbyManager.isEnabled(LobbyManager.CONFIG_REMOVE_JOIN_MESSAGE)) return;
+        event.setJoinMessage(null);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void removeJoinMessage(PlayerQuitEvent event) {
+        if (!lobbyManager.isEnabled(LobbyManager.CONFIG_REMOVE_QUIT_MESSAGE)) return;
+        event.setQuitMessage(null);
     }
 
     @EventHandler
@@ -31,7 +44,7 @@ public class LobbyManagerListeners implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void healFood(FoodLevelChangeEvent event) {
         if (!lobbyManager.isEnabled(LobbyManager.CONFIG_INFINITE_FOOD_PATH)) return;
         event.setFoodLevel(20);
