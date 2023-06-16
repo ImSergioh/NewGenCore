@@ -1,4 +1,4 @@
-package me.imsergioh.newgencore;
+package me.imsergioh.newgencore.instance;
 
 import org.bukkit.entity.Player;
 

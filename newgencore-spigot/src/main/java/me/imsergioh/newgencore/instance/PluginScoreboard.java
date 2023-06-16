@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import fr.minuskube.netherboard.Netherboard;
 import fr.minuskube.netherboard.bukkit.BPlayerBoard;
 import lombok.Getter;
-import me.imsergioh.newgencore.IPluginScoreboard;
 import me.imsergioh.newgencore.instance.config.PluginLocalConfig;
 import me.imsergioh.newgencore.util.ChatUtil;
 import me.imsergioh.newgencore.util.PluginUtil;
