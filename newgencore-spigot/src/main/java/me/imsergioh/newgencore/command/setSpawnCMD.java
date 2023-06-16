@@ -28,8 +28,8 @@ public class setSpawnCMD extends PluginCommand {
         lobbyManager.setSpawn(player.getLocation());
         ChatUtil.send(player,
                 new MessageBuilder(
-                        "&aSpawn establecido correctamente!")
-                        .color("#CCCCFF"));
+                        "&aSpawn set!")
+                        .color("CCCCFF"));
     }
 
     @Override
