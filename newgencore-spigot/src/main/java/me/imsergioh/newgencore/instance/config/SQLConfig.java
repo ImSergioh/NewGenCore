@@ -1,7 +1,7 @@
 package me.imsergioh.newgencore.instance.config;
 
 import me.imsergioh.newgencore.NewGenCore;
-import me.imsergioh.newgencore.backend.SQLConnection;
+import me.imsergioh.newgencore.backend.MySQLConnection;
 
 import java.io.File;
 
@@ -18,8 +18,8 @@ public class SQLConfig extends PluginLocalConfig {
         addDefault("username", "root");
         addDefault("password", "SQLP4ssw0rd#xDDDD");
         save();
-        NewGenCore.setSqlConnection(
-                new SQLConnection(
+        NewGenCore.setMySQLConnection(
+                new MySQLConnection(
                         getString("hostname"),
                         getInt("port"),
                         getString("database"),
