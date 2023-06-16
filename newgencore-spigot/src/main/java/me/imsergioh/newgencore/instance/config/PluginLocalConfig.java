@@ -17,7 +17,8 @@ public class PluginLocalConfig implements IPluginConfig {
     @Getter
     public final File file;
 
-    private static FileConfiguration config;
+    @Getter
+    private FileConfiguration config;
 
     public PluginLocalConfig(File file) {
         this.file = file;

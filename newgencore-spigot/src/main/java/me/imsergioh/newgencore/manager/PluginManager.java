@@ -1,5 +1,6 @@
 package me.imsergioh.newgencore.manager;
 
+import lombok.Getter;
 import me.imsergioh.newgencore.instance.command.PluginCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
@@ -7,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class PluginManager implements IPluginManager {
 
+    @Getter
     private final JavaPlugin plugin;
 
     public PluginManager(JavaPlugin plugin) {

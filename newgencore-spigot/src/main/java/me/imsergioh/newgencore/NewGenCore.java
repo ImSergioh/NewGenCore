@@ -9,6 +9,7 @@ import me.imsergioh.newgencore.command.helloWorldCMD;
 import me.imsergioh.newgencore.holder.ConfigHolder;
 import me.imsergioh.newgencore.manager.LobbyManager;
 import me.imsergioh.newgencore.manager.PluginCommandManager;
+import me.imsergioh.newgencore.manager.ScoreboardsManager;
 import me.imsergioh.newgencore.util.ExceptionsUtil;
 import me.imsergioh.newgencore.util.FilesUtil;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -31,6 +32,8 @@ public class NewGenCore extends JavaPlugin {
     // MANAGERS:
     @Getter
     private static LobbyManager lobbyManager;
+    @Getter
+    private static ScoreboardsManager scoreboardsManager;
 
     @Override
     public void onEnable() {
@@ -44,7 +47,16 @@ public class NewGenCore extends JavaPlugin {
 
     private void registerConfigManagers() {
         try {
-            lobbyManager = (LobbyManager) ConfigHolder.createPluginConfigManagerOfConfig(plugin, "managers.lobby.enabled", LobbyManager.class);
+            lobbyManager = (LobbyManager) ConfigHolder
+                    .createPluginConfigManagerOfConfig(
+                            plugin,
+                            "managers.lobby",
+                            LobbyManager.class);
+            scoreboardsManager = (ScoreboardsManager) ConfigHolder
+                    .createPluginConfigManagerOfConfig(
+                            plugin,
+                            "managers.scoreboards",
+                            ScoreboardsManager.class);
         } catch (Exception e) {
             ExceptionsUtil.handleSimpleException(e);
         }

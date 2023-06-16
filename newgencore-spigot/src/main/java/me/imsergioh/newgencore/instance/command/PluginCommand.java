@@ -60,6 +60,10 @@ public class PluginCommand implements CommandExecutor {
 
     public void executePermissionPlayer(Player player, String label, String[] args) {}
 
+    public void sendNoPermissionMessage(CommandSender sender) {
+        sender.sendMessage(onlyForConsoleMessage());
+    }
+
     public String onlyForConsoleMessage() {
         return ChatUtil.color("&cThis command is only for the console");
     }
